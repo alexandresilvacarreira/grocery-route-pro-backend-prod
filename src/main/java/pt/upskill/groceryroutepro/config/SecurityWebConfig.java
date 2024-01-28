@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -18,12 +19,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pt.upskill.groceryroutepro.entities.User;
 import pt.upskill.groceryroutepro.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,9 +70,9 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
+                .antMatchers("/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
                         "/users/forgot-password","/users/change-password/").permitAll()
-                .antMatchers("/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
+                .antMatchers("/","/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
                 .antMatchers("/products/create", "/products/edit", "/products/categories").hasAnyRole("STORE")
                 .antMatchers("**").denyAll();
     }
