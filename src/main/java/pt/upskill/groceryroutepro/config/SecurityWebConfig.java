@@ -11,12 +11,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -45,7 +48,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors()
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -68,7 +71,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                     handleFailure(request, response, exception);
                 })
                 .and()
-                .csrf().disable()
+//                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
                         "/users/forgot-password","/users/change-password/").permitAll()
@@ -76,6 +79,8 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/products/create", "/products/edit", "/products/categories").hasAnyRole("STORE")
                 .antMatchers("**").denyAll();
     }
+
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder managerBuilder) {
