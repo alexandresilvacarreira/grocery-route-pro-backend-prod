@@ -123,9 +123,9 @@ public class ScraperController {
     public ResponseEntity<String> scrapeAllChains() {
         try {
             this.scraperService.scrapeIntermarcheAll();
-            this.scraperService.scrapeMiniprecoAll();
-            this.scraperService.scrapePingoDoceAll();
             this.scraperService.scrapeContinenteAll();
+            this.scraperService.scrapePingoDoceAll();
+            this.scraperService.scrapeMiniprecoAll();
             this.scraperService.scrapeAuchanAll();
             return ResponseEntity.ok("Produtos guardados com sucesso");
         } catch (Exception e) {
