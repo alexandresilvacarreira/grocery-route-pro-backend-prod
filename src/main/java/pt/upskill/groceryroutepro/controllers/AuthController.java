@@ -16,8 +16,6 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-
-
     // O loginForm requer este endpoint para redireccionar o utilizador no caso de pedidos efetuados sem autenticação.
     // Deverá redireccionar para a página de login do frontend
     @GetMapping("/login")
@@ -26,7 +24,6 @@ public class AuthController {
 
     @PostMapping("/logout")
     public void logout() {
-
     }
 
 

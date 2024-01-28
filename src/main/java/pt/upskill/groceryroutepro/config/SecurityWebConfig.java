@@ -65,12 +65,10 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
+                .antMatchers("/","/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
                         "/users/forgot-password","/users/change-password/").permitAll()
-                .antMatchers("/","/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
+                .antMatchers("/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
                 .antMatchers("/products/create", "/products/edit", "/products/categories").hasAnyRole("STORE")
-  //              .antMatchers("/user-management/**").hasRole("ADMIN")
-                .antMatchers("/scraper/**").permitAll()
                 .antMatchers("**").denyAll();
     }
 
