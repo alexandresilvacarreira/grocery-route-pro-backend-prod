@@ -14,22 +14,20 @@ import org.springframework.context.annotation.Configuration;
 public class TomcatCookieConfig {
 
     @Bean
-    public TomcatServletWebServerFactory tomcatFactory() {
-        return new TomcatServletWebServerFactory() {
+    public TomcatServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
             protected void customizeConnector(Connector connector) {
                 super.customizeConnector(connector);
-                connector.setPort(8080);
+                connector.setPort(8080); // Customize port if needed
             }
         };
-    }
 
-    @Bean
-    public TomcatContextCustomizer tomcatContextCustomizer() {
-        return context -> {
-            if (context instanceof StandardContext) {
-                context.setCookieProcessor(new LegacyCookieProcessor());
-            }
-        };
+        tomcat.addContextCustomizers(context -> {
+            // Customize the Tomcat context
+            context.setCookieProcessor(new LegacyCookieProcessor());
+        });
+
+        return tomcat;
     }
 }
