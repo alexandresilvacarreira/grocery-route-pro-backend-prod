@@ -22,6 +22,9 @@ public class CookieConfig extends WebMvcConfigurerAdapter  implements HandlerInt
                     if ("JSESSIONID".equals(cookie.getName())) {
                         response.setHeader("Set-Cookie", modifyJSessionIdCookie(cookie));
                     }
+                    if ("__cf_bm".equals(cookie.getName())){
+                        response.setHeader("Set-Cookie", modifyCfCookie(cookie));
+                    }
 
                 }
             }
@@ -31,6 +34,11 @@ public class CookieConfig extends WebMvcConfigurerAdapter  implements HandlerInt
 
     private String modifyJSessionIdCookie(Cookie cookie) {
         String updatedCookie = String.format("%s=%s; HttpOnly=true; Secure=false; SameSite=None", cookie.getName(), cookie.getValue());
+        return updatedCookie;
+    }
+
+    private String modifyCfCookie(Cookie cookie) {
+        String updatedCookie = String.format("%s=%s; HttpOnly=true; Secure=true; SameSite=None; Domain=digitalocean", cookie.getName(), cookie.getValue());
         return updatedCookie;
     }
 
