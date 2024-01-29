@@ -48,7 +48,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .cors()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -60,7 +60,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 }))
                 .and()
                 .formLogin()
-                .loginPage("/login") // Se um utilizador pedir um recurso ao qual nao tem acesso, o Spring redirecciona para uma página de login.
+                .loginPage("https://groceryroutepro.live/login") // Se um utilizador pedir um recurso ao qual nao tem acesso, o Spring redirecciona para uma página de login.
                 .loginProcessingUrl("/process-login")
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -71,11 +71,11 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                     handleFailure(request, response, exception);
                 })
                 .and()
-//                .csrf().disable()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
+                .antMatchers("/","/signup", "/login", "/logout", "/verify-account/", "/users/get-authenticated-user",
                         "/users/forgot-password","/users/change-password/").permitAll()
-                .antMatchers("/","/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
+                .antMatchers("/shopping-list/**", "/products/**", "/google-maps-api/**").authenticated()
                 .antMatchers("/products/create", "/products/edit", "/products/categories").hasAnyRole("STORE")
                 .antMatchers("**").denyAll();
     }
