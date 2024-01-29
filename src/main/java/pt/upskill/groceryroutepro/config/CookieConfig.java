@@ -33,7 +33,7 @@ public class CookieConfig extends WebMvcConfigurerAdapter  implements HandlerInt
     }
 
     private String modifyJSessionIdCookie(Cookie cookie) {
-        String updatedCookie = String.format("%s=%s; HttpOnly=true; Secure=false; SameSite=None", cookie.getName(), cookie.getValue());
+        String updatedCookie = String.format("%s=%s; HttpOnly=true; Secure=true; SameSite=None", cookie.getName(), cookie.getValue());
         return updatedCookie;
     }
 
