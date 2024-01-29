@@ -5,6 +5,8 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.naming.Context;
+
 @Configuration
 public class TomcatCookieConfig {
 

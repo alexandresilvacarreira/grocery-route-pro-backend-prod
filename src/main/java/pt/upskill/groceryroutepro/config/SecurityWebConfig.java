@@ -60,7 +60,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 }))
                 .and()
                 .formLogin()
-                .loginPage("https://groceryroutepro.live/login") // Se um utilizador pedir um recurso ao qual nao tem acesso, o Spring redirecciona para uma página de login.
+                .loginPage("/login") // Se um utilizador pedir um recurso ao qual nao tem acesso, o Spring redirecciona para uma página de login.
                 .loginProcessingUrl("/process-login")
                 .usernameParameter("email")
                 .passwordParameter("password")
