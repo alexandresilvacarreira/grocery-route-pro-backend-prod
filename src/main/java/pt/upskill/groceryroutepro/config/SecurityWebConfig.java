@@ -54,7 +54,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .invalidateHttpSession(true) // Invalidar a sessão HTTP
                 .clearAuthentication(true) // Limpar detalhes de autenticação
-                .deleteCookies("JSESSIONID") // Limpar cookies de sessão
+                .deleteCookies("JSESSIONID", "__cf_bm") // Limpar cookies de sessão
                 .logoutSuccessHandler(((request, response, authentication) -> {
                     handleLogoutSuccess(request, response, authentication);
                 }))
